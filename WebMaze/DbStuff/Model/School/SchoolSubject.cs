@@ -9,7 +9,7 @@ namespace WebMaze.DbStuff.Model.School
     /// <summary>
     /// Table for school subjects,  
     /// </summary>
-    [Table("subject", Schema = "School")]
+    [Table("school_subject")]
     public class SchoolSubject : BaseModel
     {
         [Required]

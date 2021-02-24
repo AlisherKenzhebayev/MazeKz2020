@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 using WebMaze.DbStuff.Model;
 using WebMaze.DbStuff.Model.Medicine;
 using WebMaze.DbStuff.Model.Police;
+using WebMaze.DbStuff.Model.School;
 using WebMaze.DbStuff.Model.UserAccount;
 
 namespace WebMaze.DbStuff
@@ -46,6 +48,18 @@ namespace WebMaze.DbStuff
         public DbSet<MedicalInsurance> MedicalInsurances { get; set; }
         public DbSet<MedicineCertificate> MedicineCertificates { get; set; }
         public DbSet<ReceptionOfPatients> ReceptionOfPatients { get; set; }
+        
+        public DbSet<SchoolSchedule> Schedules { get; set; }
+        
+        public DbSet<SchoolBuilding> SchoolBuildings { get; set; }
+        
+        public DbSet<SchoolCertificate> SchoolCertificates { get; set; }
+        
+        public DbSet<SchoolStaff> SchoolStaffs { get; set; }
+        
+        public DbSet<SchoolSubject> SchoolSubjects { get; set; }
+        
+        public DbSet<SchoolStudent> Students { get; set; }
 
         public WebMazeContext(DbContextOptions dbContext) : base(dbContext) { }
 
@@ -119,6 +133,78 @@ namespace WebMaze.DbStuff
                 .WithOne(friendship => friendship.Requested)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<SchoolSubject>(builder =>
+            {
+                builder
+                    .HasOne(subject => subject.SchoolBuilding)
+                    .WithMany(building => building.Subjects)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasForeignKey(subject => subject.SchoolId);
+                builder
+                    .HasIndex(subject => subject.SubjectCode)
+                    .IsUnique();
+            });
+
+            modelBuilder.Entity<SchoolBuilding>(builder =>
+            {
+                builder
+                    .HasOne(building => building.Address)
+                    .WithOne()
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasForeignKey<SchoolBuilding>(building => building.AddressId);
+            });
+            
+            modelBuilder.Entity<SchoolCertificate>(builder =>
+            {
+                builder
+                    .HasOne(certificate => certificate.Certificate)
+                    .WithOne()
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasForeignKey<SchoolCertificate>(certificate => certificate.CertificateId);
+                builder
+                    .HasOne(certificate => certificate.CitizenUser)
+                    .WithOne()
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasForeignKey<SchoolCertificate>(certificate => certificate.CitizenUserId);
+            });
+            
+            modelBuilder.Entity<SchoolSchedule>(builder =>
+            {
+                builder
+                    .HasOne(schedule => schedule.CitizenUser)
+                    .WithOne()
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasForeignKey<SchoolSchedule>(schedule => schedule.CitizenUserId);
+                builder
+                    .HasOne(schedule => schedule.SchoolSubject)
+                    .WithOne()
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasForeignKey<SchoolSchedule>(schedule => schedule.SubjectId);
+            });
+
+            modelBuilder.Entity<SchoolStaff>(builder =>
+            {
+                builder
+                    .HasOne(staff => staff.CitizenUser)
+                    .WithOne()
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasForeignKey<SchoolStaff>(staff => staff.CitizenUserId);
+            });
+
+            modelBuilder.Entity<SchoolStudent>(builder =>
+            {
+                builder
+                    .HasOne(student => student.CitizenUser)
+                    .WithOne()
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasForeignKey<SchoolStudent>(student => student.CitizenUserId);
+                builder
+                    .HasOne(student => student.SchoolBuilding)
+                    .WithOne()
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasForeignKey<SchoolStudent>(student => student.SchoolId);
+            });
+            
             base.OnModelCreating(modelBuilder);
         }
     }

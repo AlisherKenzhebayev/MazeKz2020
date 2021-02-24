@@ -8,8 +8,8 @@ namespace WebMaze.DbStuff.Model.School
     /// <summary>
     /// Table for certificates, both students and staff
     /// </summary>
-    [Table("school_certificate", Schema = "School")]
-    public class SchoolCertificate
+    [Table("school_certificate")]
+    public class SchoolCertificate : BaseModel
     {
         [Required]
         public virtual long CitizenUserId { get; set; }

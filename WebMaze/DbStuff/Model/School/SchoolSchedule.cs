@@ -7,8 +7,8 @@ namespace WebMaze.DbStuff.Model.School
     /// <summary>
     /// Table for student schedules as well as faculty staff schedules.
     /// </summary>
-    [Table("schedule", Schema = "School")]
-    public class Schedule : BaseModel
+    [Table("school_schedule")]
+    public class SchoolSchedule : BaseModel
     {
         [Required]
         public virtual long CitizenUserId { get; set; }

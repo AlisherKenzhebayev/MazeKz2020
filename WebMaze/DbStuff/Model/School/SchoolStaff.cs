@@ -8,7 +8,7 @@ namespace WebMaze.DbStuff.Model.School
     /// <summary>
     /// Table for staff members
     /// </summary>
-    [Table("school_staff", Schema = "School")]
+    [Table("school_staff")]
     public class SchoolStaff : BaseModel
     {
         [Required]

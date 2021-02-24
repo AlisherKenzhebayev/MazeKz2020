@@ -5,8 +5,8 @@ using WebMaze.DbStuff.Model.School.Enums;
 
 namespace WebMaze.DbStuff.Model.School
 {
-    [Table("student", Schema = "School")]
-    public class Student : BaseModel
+    [Table("school_student")]
+    public class SchoolStudent : BaseModel
     {
         [Required]
         public virtual long CitizenUserId { get; set; }
