@@ -189,6 +189,11 @@ namespace WebMaze.DbStuff
                     .WithOne()
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasForeignKey<SchoolStaff>(staff => staff.CitizenUserId);
+                builder
+                    .HasOne(staff => staff.SchoolBuilding)
+                    .WithOne()
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasForeignKey<SchoolStaff>(staff => staff.SchoolId);
             });
 
             modelBuilder.Entity<SchoolStudent>(builder =>

@@ -15,6 +15,9 @@ namespace WebMaze.DbStuff.Model.School
         public virtual long CitizenUserId { get; set; }
         
         [Required]
+        public virtual long SchoolId { get; set; }
+        
+        [Required]
         public virtual StaffMember StaffMember { get; set; }
         
         public virtual DateTime? StartDate { get; set; }
@@ -23,6 +26,7 @@ namespace WebMaze.DbStuff.Model.School
 
         #region navProperties
             public virtual CitizenUser CitizenUser { get; set; }
+            public virtual SchoolBuilding SchoolBuilding { get; set; }
         #endregion
     }
 }
