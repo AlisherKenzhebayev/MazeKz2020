@@ -6,7 +6,11 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using WebMaze.DbStuff.Model.UserAccount;
+using WebMaze.Infrastructure.Enums;
 using WebMaze.Models.Certificates;
 
 namespace WebMaze.Services
@@ -15,10 +19,16 @@ namespace WebMaze.Services
     {
         private readonly HttpClient httpClient;
 
-        public CertificateService(HttpClient httpClient)
+        public CertificateService(LinkGenerator linkGenerator, IHttpContextAccessor httpContextAccessor)
         {
-            httpClient.BaseAddress = new Uri("https://localhost:44302/api/certificates/");
-            this.httpClient = httpClient;
+            var uri = $"{httpContextAccessor.HttpContext.Request.Scheme}://" +
+                      $"{httpContextAccessor.HttpContext.Request.Host}" +
+                      linkGenerator.GetPathByAction("GetCertificates", "CertificatesApi");
+
+            httpClient = new HttpClient()
+            {
+                BaseAddress = new Uri(uri)
+            };
         }
 
         public async Task<OperationResult> IssueCertificate(string certificateName, string userLogin, string issuedBy,
@@ -65,7 +75,7 @@ namespace WebMaze.Services
         {
             var responseString = await httpClient.GetStringAsync("");
             var certificates = responseString.DeserializeCaseInsensitive<List<CertificateViewModel>>();
-            
+
             return certificates;
         }
 
@@ -107,6 +117,7 @@ namespace WebMaze.Services
 
             var responseString = await httpResponse.Content.ReadAsStringAsync();
             var errorMessages = responseString.DeserializeCaseInsensitive<List<string>>();
+
             return new OperationResult { Succeeded = false, Errors = errorMessages };
         }
 
@@ -124,6 +135,7 @@ namespace WebMaze.Services
 
             var responseString = await httpResponse.Content.ReadAsStringAsync();
             var errorMessages = responseString.DeserializeCaseInsensitive<List<string>>();
+
             return new OperationResult { Succeeded = false, Errors = errorMessages };
         }
 
@@ -138,6 +150,7 @@ namespace WebMaze.Services
 
             var responseString = await httpResponse.Content.ReadAsStringAsync();
             var errorMessages = responseString.DeserializeCaseInsensitive<List<string>>();
+
             return new OperationResult { Succeeded = false, Errors = errorMessages };
         }
     }

@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-7">
+        <div class="col-sm-7 px-2">
             <div class="card text-center mb-3">
                 <div class="card-body">
                     Friend requests:
@@ -21,10 +21,17 @@
                         {
                             <div class="col-sm-4 p-2">
                                 <div class="mb-2">
-                                    <a class="mb-2" asp-controller="Users" asp-action="Profile" asp-route-userLogin="@friend.Login"><strong>@friend.FirstName @friend.LastName</strong></a>
+                                    <a class="mb-2" asp-controller="Users" asp-action="Profile" asp-route-userLogin="@friend.Login">
+                                        <div>
+                                            <strong>@friend.FirstName</strong>
+                                        </div>
+                                        <div>
+                                            <strong>@friend.LastName</strong>
+                                        </div>
+                                    </a>
                                 </div>
                                 <img src="@friend.AvatarUrl" class="rounded-circle mx-auto d-block" height="100" width="100" alt="Profile picture">
-                                <a asp-action="Message" asp-route-id="@friend.Id" class="btn btn-primary btn-sm btn-block my-2">Message</a>
+                                <a asp-action="Chat" asp-controller="Messenger" asp-route-recipientLogin="@friend.Login" class="btn btn-primary btn-sm btn-block my-2">Message</a>
                                 <form asp-action="Unfriend" method="post">
                                     <input type="hidden" name="userLogin" value="@friend.Login" />
                                     <button type="submit" class="btn btn-warning btn-sm btn-block">Unfriend</button>
@@ -36,11 +43,11 @@
             </div>
         </div>
 
-        <div class="col-sm-5">
+        <div class="col-sm-5 px-2">
             <div class="card text-center mb-3">
                 <div class="card-body">
                     Find users:
-                    <form asp-action="SearchUsers" method="get">
+                    <form asp-action="Index" method="get">
                         <div class="form-group">
                             <input type="text" class="form-control" name="searchTerm" />
                             <button type="submit" class="btn btn-primary my-2">Search</button>
@@ -50,18 +57,15 @@
                     @if (Model.FoundUsers.Any())
                     {
                         <div class="d-flex flex-wrap align-items-center">
-                            @foreach (var user in Model.FoundUsers)
+                            @foreach (var foundUser in Model.FoundUsers)
                             {
                                 <div class="col-sm-6 p-2">
                                     <div class="mb-2">
-                                        <a asp-controller="Users" asp-action="Profile" asp-route-userLogin="@user.Login"><strong>@user.FirstName @user.LastName</strong></a>
+                                        <a asp-controller="Users" asp-action="Profile" asp-route-userLogin="@foundUser.Login"><strong>@foundUser.FirstName @foundUser.LastName</strong></a>
                                     </div>
-                                    <img src="@user.AvatarUrl" class="rounded-circle mx-auto d-block" height="100" width="100" alt="Profile picture">
-                                    <a asp-controller="Users" asp-action="Profile" asp-route-userLogin="@user.Login" class="btn btn-sm btn-primary btn-block my-2">Profile</a>
-                                    <form asp-action="SendFriendRequest" method="post">
-                                        <input type="hidden" name="userLogin" value="@user.Login" />
-                                        <button type="submit" class="btn btn-success btn-sm btn-block">Send friend request</button>
-                                    </form>
+                                    <img src="@foundUser.AvatarUrl" class="rounded-circle mx-auto d-block" height="100" width="100" alt="Profile picture">
+                                    <a asp-controller="Users" asp-action="Profile" asp-route-userLogin="@foundUser.Login" class="btn btn-sm btn-primary btn-block my-2">Profile</a>
+                                    <partial name="_FriendshipActionPartial" model="foundUser" />
                                 </div>
                             }
                         </div>

@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\image\Maralov\" />
+    <Folder Include="wwwroot\image\certificates\" />
   </ItemGroup>
 
 </Project>

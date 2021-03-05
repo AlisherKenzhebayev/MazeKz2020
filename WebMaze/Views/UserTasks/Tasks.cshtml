@@ -5,7 +5,7 @@
     Layout = "_LayoutUserAccount";
 }
 
-<div class="container text-center">
+<div class="container text-center px-2">
     <div class="row">
         <div class="col-sm-8">
             <div class="card text-center mb-3">
@@ -73,7 +73,7 @@
                                             <h5><span class="badge badge-info w-100">@task.StartDate.DayOfWeek.ToString()</span></h5>
                                             break;
                                         case TaskRelativeDate.Upcoming:
-                                            <h5><span class="badge badge-info w-100">@task.StartDate.DayOfYear.ToString()</span></h5>
+                                            <h5><span class="badge badge-info w-100">@task.StartDate.ToString("M")</span></h5>
                                             break;
                                         case TaskRelativeDate.Overdue:
                                             <h5><span class="badge badge-danger w-100">@task.RelativeDate.ToString()</span></h5>
@@ -92,7 +92,9 @@
                 <div class="card-body">
                     <h2>Plan a task</h2>
                     <partial name="_EditTaskPartial" model="new UserTaskViewModel
-                    { StartDate = DateTime.Now + TimeSpan.FromHours(1) }" />
+                                                            { StartDate = DateTime.Now + TimeSpan.FromHours(1),
+                                                                EndDate = DateTime.Now + TimeSpan.FromHours(2),
+                                                                OwnerLogin = User.Identity.Name }" />
                 </div>
             </div>
         </div>

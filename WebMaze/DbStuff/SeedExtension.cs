@@ -22,13 +22,7 @@ namespace WebMaze.DbStuff
             {
                 AddIfNotExistRoles(scope);
                 AddIfNotExistAdmins(scope);
-
-                var webHostEnvironment = scope.ServiceProvider.GetService<IWebHostEnvironment>();
-
-                if (webHostEnvironment.IsDevelopment())
-                {
-                    new TestDataSeeder(scope).SeedData();
-                }
+                new TestDataSeeder(scope).SeedData();
             }
 
             return host;
@@ -66,7 +60,7 @@ namespace WebMaze.DbStuff
                 new CitizenUser
                 {
                     Login = "Bill",
-                    Password = "123",
+                    Password = "123456Qq",
                     AvatarUrl = "/image/avatar/bill.jpg",
                     Balance = 120000000000,
                     RegistrationDate = new DateTime(2020, 10, 1),
