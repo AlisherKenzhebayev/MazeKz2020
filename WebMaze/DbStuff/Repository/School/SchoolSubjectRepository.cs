@@ -47,7 +47,6 @@ namespace WebMaze.DbStuff.Repository.School
         private IQueryable<SchoolSubject> GetMajorRelated(Major major)
         {
             var retVal = dbSet
-                .Select(s => s)
                 .Where(s => s.RelevantMajor == major);
             return retVal;
         }
@@ -55,7 +54,6 @@ namespace WebMaze.DbStuff.Repository.School
         private IQueryable<SchoolSubject> GetSchool(long schoolId)
         {
             var retVal = dbSet
-                .Select(s => s)
                 .Where(s => s.SchoolId == schoolId);
             return retVal;
         }
