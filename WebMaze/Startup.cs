@@ -45,6 +45,9 @@ using WebMaze.Models.HDManager;
 using WebMaze.Models.Messenger;
 using WebMaze.Models.Transactions;
 using WebMaze.Models.Users;
+using WebMaze.DbStuff.Repository.School;
+using WebMaze.Models.School;
+using WebMaze.DbStuff.Model.School;
 
 namespace WebMaze
 {
@@ -52,6 +55,7 @@ namespace WebMaze
     {
         public const string AuthMethod = "CoockieAuth";
         public const string PoliceAuthMethod = "PoliceAuth";
+        public const string SchoolAuth = "SchoolAuth";
         public const string MedicineAuth = "CookieMedicineAuth";
 
         public Startup(IConfiguration configuration)
@@ -80,6 +84,12 @@ namespace WebMaze
                 {
                     config.Cookie.Name = "PUser";
                     config.LoginPath = "/Police/Login";
+                })
+                .AddCookie(SchoolAuth, config =>
+                {
+                    config.Cookie.Name = "School.Auth";
+                    config.LoginPath = "/School/Login";
+                    config.AccessDeniedPath = "/School/AccessDenied";
                 });
 
             services.AddAuthentication(AuthMethod)
@@ -268,6 +278,22 @@ namespace WebMaze
             configurationExpression.CreateMap<ReceptionOfPatients, UserPageViewModel>();
             configurationExpression.CreateMap<UserPageViewModel, ReceptionOfPatients>();
 
+            configurationExpression.CreateMap<SchoolBuildingViewModel, SchoolBuilding>();
+            configurationExpression.CreateMap<SchoolBuilding, SchoolBuildingViewModel>();
+
+            configurationExpression.CreateMap <SchoolCertificate, SchoolCertificateViewModel>()
+                .ForMember(dest => dest.Certificate, orig => orig.MapFrom(o => o.Certificate));
+
+            configurationExpression.CreateMap<SchoolStaff, SchoolProfileViewModel>()
+                .ForMember(dest => dest.User, opt => opt.MapFrom(p => p.CitizenUser))
+                .ForMember(dest => dest.StaffRank, opt => opt.MapFrom(p => p.StaffMember));
+            configurationExpression.CreateMap<SchoolStudent, SchoolProfileViewModel>()
+                .ForMember(dest => dest.User, opt => opt.MapFrom(p => p.CitizenUser));
+
+            configurationExpression.CreateMap<SchoolSchedule, SchoolScheduleViewModel>()
+                .ForMember(dest => dest.SchoolSubject, opt => opt.MapFrom(p => p.SchoolSubject));
+            configurationExpression.CreateMap<SchoolSubject, SchoolSubjectViewModel>();
+
             var mapperConfiguration = new MapperConfiguration(configurationExpression);
             var mapper = new Mapper(mapperConfiguration);
             services.AddScoped<IMapper>(s => mapper);
@@ -306,6 +332,13 @@ namespace WebMaze
             services.AddScoped(s => new MedicalInsuranceRepository(s.GetService<WebMazeContext>()));
             services.AddScoped(s => new MedicineCertificateRepository(s.GetService<WebMazeContext>()));
             services.AddScoped(s => new ReceptionOfPatientsRepository(s.GetService<WebMazeContext>()));
+
+            services.AddScoped(s => new SchoolBuildingRepository(s.GetService<WebMazeContext>()));
+            services.AddScoped(s => new SchoolCertificateRepository(s.GetService<WebMazeContext>()));
+            services.AddScoped(s => new SchoolScheduleRepository(s.GetService<WebMazeContext>()));
+            services.AddScoped(s => new SchoolStaffRepository(s.GetService<WebMazeContext>()));
+            services.AddScoped(s => new SchoolStudentRepository(s.GetService<WebMazeContext>()));
+            services.AddScoped(s => new SchoolSubjectRepository(s.GetService<WebMazeContext>()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

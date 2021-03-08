@@ -12,6 +12,6 @@ namespace WebMaze.DbStuff.Model.School.Enums
         TeachingAssistant = 4,
         MedicalStaff = 5, 
         MaintenanceStaff = 6,
-        SchoolBusDriver = 7,
+        SchoolBusDriver = 7
     }
 }
