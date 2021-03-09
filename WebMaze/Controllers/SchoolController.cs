@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WebMaze.DbStuff.Model;
@@ -213,12 +214,31 @@ namespace WebMaze.Controllers
             var student = _schoolStudentRepository.GetByCitizenId(user.Id);
             if (staff != default)
             {
-                var viewModel = mapper.Map<SchoolProfileViewModel>(staff);
+                var profileModel = mapper.Map<SchoolProfileViewModel>(staff);
+                var scheduleModel = mapper.Map<List<SchoolScheduleViewModel>>(_schoolScheduleRepository.GetFullSchedule(user.Id));
+                var certificatesModel = mapper.Map<List<SchoolCertificateViewModel>>(_schoolCertificateRepository.GetCertificates(user.Id));
+
+                var viewModel = new SchoolAccountViewModel()
+                {
+                    ProfileViewModel = profileModel,
+                    FullScheduleViewModel = scheduleModel,
+                    CertificatesViewModel = certificatesModel
+                };
                 return View("MyProfile", viewModel);
             }
 
             if (student != default){
-                var viewModel = mapper.Map<SchoolProfileViewModel>(student);
+                var profileModel = mapper.Map<SchoolProfileViewModel>(student);
+                var scheduleModel = mapper.Map<List<SchoolScheduleViewModel>>(_schoolScheduleRepository.GetFullSchedule(user.Id));
+                var certificatesModel = mapper.Map<List<SchoolCertificateViewModel>>(_schoolCertificateRepository.GetCertificates(user.Id));
+
+                var viewModel = new SchoolAccountViewModel()
+                {
+                    ProfileViewModel = profileModel,
+                    FullScheduleViewModel = scheduleModel,
+                    CertificatesViewModel = certificatesModel
+                };
+                
                 return View("MyProfile", viewModel);
             }
 

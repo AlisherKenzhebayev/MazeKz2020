@@ -1,9 +1,18 @@
-﻿@{
+﻿@model WebMaze.Models.School.SchoolAccountViewModel
+
+@{
     Layout = "_LayoutSchool";
 }
 
-<div class="p-md-5 p-4 mb-4 text-white bg-darker rounded">
-    <div class="col-md-10 px-0 w-100 text-dark">
+<div class="p-md-5 p-2 mb-0 text-white bg-darker rounded">
+    <div class="col-md-4 card">
+        <h5 class="card-title">Available actions:</h5>
+        <partial name="_SchoolAccountSchedulePartial" model="@Model.FullScheduleViewModel"/>
+    </div>
+    
+    <div class="col-md-8 px-0 w-100 text-dark">
         <h1 class="display-4">School profile page, changes depending on model and whether the user is a student or staff member.</h1>
     </div>
+
+
 </div>
