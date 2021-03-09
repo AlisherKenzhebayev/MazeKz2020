@@ -25,9 +25,12 @@ namespace WebMaze.Services
                       $"{httpContextAccessor.HttpContext.Request.Host}" +
                       linkGenerator.GetPathByAction("GetCertificates", "CertificatesApi");
 
-            httpClient = new HttpClient()
+            httpClient = new HttpClient(new HttpClientHandler()
             {
-                BaseAddress = new Uri(uri)
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+            })
+            {
+                BaseAddress = new Uri(uri),
             };
         }
 

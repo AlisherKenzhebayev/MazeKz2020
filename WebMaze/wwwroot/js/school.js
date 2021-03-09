@@ -1,21 +1,41 @@
 ﻿$(document).ready(function () {
-    $('input[type=submit]').attr('disabled', 'disabled');
+    var formInput = $('input[type=submit]');
+    formInput.attr('disabled', 'disabled');
 
-    $('#Login').keyup(function () {
-        validateForm();
-    });
+    if (document.getElementById('Login')){
+        $('#Login').keyup(function () {
+            validateForm();
+        });
+    }
 
-    $('#Password').keyup(function () {
-        validateForm();
-    });
+    if (document.getElementById('Password')) {
+        $('#Password').keyup(function () {
+            validateForm();
+        });
+    }
+
+    if (document.getElementById('PasswordConfirm')) {
+        $('#PasswordConfirm').keyup(function () {
+            validateForm();
+        });
+    }
 
     function validateForm() {
-        var loginCorrect = $('#Login').val().length > 0;
-        var passwordCorrect = $('#Password').val().length > 0;
-        if (loginCorrect && passwordCorrect) {
-            $('input[type=submit]').removeAttr('disabled');
+        var everythingCorrect = true;
+        if (document.getElementById('Login')) {
+            everythingCorrect &&= $('#Login').val().length > 0;
+        }
+        if (document.getElementById('Password')) {
+            var passForm = $('#Password').val().length;
+            everythingCorrect &&= passForm > 0;
+            if (document.getElementById('PasswordConfirm')) {
+                everythingCorrect &&= $('#PasswordConfirm').val().length > 0;
+            }
+        }
+        if (everythingCorrect) {
+            formInput.removeAttr('disabled');
         } else {
-            $('input[type=submit]').attr('disabled', 'disabled');
+            formInput.attr('disabled', 'disabled');
         }
     }
 });

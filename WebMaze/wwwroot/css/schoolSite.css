@@ -156,27 +156,22 @@ input[type = "submit"] {
     color: #b94a48;
 }
 
- 
 .field-validation-valid {
     display: none;
 }
 
- 
 input.input-validation-error {
     border: 1px solid #b94a48;
 }
 
- 
 input[type="checkbox"].input-validation-error {
     border: 0 none;
 }
 
- 
 .validation-summary-errors {
     color: #b94a48;
 }
 
- 
 .validation-summary-valid {
     display: none;
 }
@@ -189,3 +184,8 @@ p.paragraphError {
     color: #b94a48;
     font-size: 14px;
 }
+
+h1.text-danger {
+    color: #d73532;
+}
+

@@ -9,6 +9,13 @@ namespace WebMaze.DbStuff.Repository.School
         {
         }
 
+        public SchoolStaff GetByCitizenId(long citizenId)
+        {
+            var retVal = dbSet
+                .SingleOrDefault(o => o.CitizenUserId == citizenId);
+            return retVal;
+        }
+
         public IQueryable<SchoolStaff> GetAllFromSchool(long schoolId)
         {
             var retVal = dbSet

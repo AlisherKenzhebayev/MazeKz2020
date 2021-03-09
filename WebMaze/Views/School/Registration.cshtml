@@ -1,9 +1,51 @@
-﻿@{
+﻿@model WebMaze.Models.Account.RegistrationViewModel
+
+@{
     Layout = "_LayoutSchool";
+}
+
+@section Scripts{
+    <script src="~/js/school.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 }
 
 <div class="p-md-5 p-4 mb-4 text-white bg-darker rounded">
     <div class="col-md-10 px-0 w-100 text-dark">
         <h1 class="display-4">Registration page.</h1>
     </div>
+</div>
+
+<div class="loginWrapper">
+    <form class="formContent w-75 d-flex flex-column" asp-action="Registration" asp-controller="School" method="post" class="needs-validation flex-column" novalidate>
+        <div class="form-group flex-column d-flex align-items-center">
+            <label asp-for="@Model.Login" class="control-label">Login:</label>
+            <div class="flex-column d-flex align-items-center">
+                <input type="text" id="Login" asp-for="@Model.Login" class="form-control w-50 justify-content-start col-md-auto">
+                <span class="justify-content-end">@Html.ValidationMessageFor(m => m.Login)</span>
+            </div>
+        </div>
+        <div class="form-group flex-column d-flex align-items-center">
+            <label asp-for="@Model.Password" class="control-label">Password:</label>
+            <div class="flex-column d-flex align-items-center">
+                <input type="password" id="Password" asp-for="@Model.Password" class="form-control w-50 justify-content-start col-md-auto">
+                <span class="justify-content-end">@Html.ValidationMessageFor(m => m.Password)</span>
+            </div>
+        </div>
+        <div class="form-group flex-column d-flex align-items-center">
+            <label asp-for="@Model.RepeatPassword" class="control-label">Repeat Password:</label>
+            <div class="flex-column d-flex align-items-center">
+                <input type="password" id="PasswordConfirm" asp-for="@Model.RepeatPassword" class="form-control w-50 col-md-auto">
+                <span class="justify-content-end">@Html.ValidationMessageFor(m => m.RepeatPassword)</span>
+            </div>
+        </div>
+        <input type="submit" value="Sign Up">
+    </form>
+    <hr />
+    <h4>Login?</h4>
+    <button asp-controller="Account" asp-action="Login">
+        Login instead.
+    </button>
 </div>

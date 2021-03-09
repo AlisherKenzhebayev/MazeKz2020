@@ -22,7 +22,7 @@ namespace WebMaze.Models.Account
         [RegularExpression(@".*\d.*", ErrorMessage = Constants.PasswordMustContainDigit)]
         public string Password { get; set; }
 
-        [Compare(nameof(Password))]
+        [Compare("Password")]
         public string RepeatPassword { get; set; }
     }
 }

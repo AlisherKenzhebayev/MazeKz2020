@@ -5,7 +5,7 @@
 }
 
 @section Scripts{
-    @*<script src="~/js/school.js"></script>*@
+    <script src="~/js/school.js"></script>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
@@ -21,21 +21,21 @@
 <div class="loginWrapper">
     <form class="formContent w-75 d-flex flex-column" asp-action="Login" asp-controller="School" method="post" class="needs-validation flex-column" novalidate>
         <input type="hidden" value="@Model.ReturnUrl" name="returnUrl" />
-        <div class="form-group flex-column col-md-auto ">
-            <label asp-for="@Model.Login" class="control-label">Login:</label>
-                <div class="flex-row ml-1 align-items-start">
-                    <input type="text" id="Login" name="login" placeholder="login" asp-for="@Model.Login" class="form-control w-50 justify-content-start mr-auto">
-                    <span class="justify-content-end">@Html.ValidationMessageFor(m => m.Login)</span>
-                </div>
+        <div class="form-group flex-column d-flex align-items-center">
+        <label asp-for="@Model.Login" class="control-label">Login:</label>
+            <div class="flex-column d-flex align-items-center">
+                <input type="text" id="Login" name="login" placeholder="login" asp-for="@Model.Login" class="form-control w-50 justify-content-start col-md-auto">
+                <span class="justify-content-end">@Html.ValidationMessageFor(m => m.Login)</span>
             </div>
-            <div class="form-group flex-column">
-                <label asp-for="@Model.Password" class="control-label">Password:</label>
-                <div class="flex-row ml-1 align-items-start">
-                    <input type="text" id="Password" name="password" placeholder="password" asp-for="@Model.Password" class="form-control w-50 justify-content-start mr-auto">
-                    <span class="justify-content-end">@Html.ValidationMessageFor(m => m.Password)</span>
-                </div>
+        </div>
+        <div class="form-group flex-column d-flex align-items-center">
+            <label asp-for="@Model.Password" class="control-label">Password:</label>
+            <div class="flex-column d-flex align-items-center">
+                <input type="password" id="Password" name="password" placeholder="password" asp-for="@Model.Password" class="form-control w-50 justify-content-start col-md-auto">
+                <span class="justify-content-end">@Html.ValidationMessageFor(m => m.Password)</span>
             </div>
-            <input type="submit" value="Log In">
+        </div>
+        <input type="submit" value="Log In">
 </form>
     <hr />
     <h4>Sign Up?</h4>
