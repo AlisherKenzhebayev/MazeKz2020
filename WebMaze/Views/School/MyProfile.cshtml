@@ -1,18 +1,33 @@
-﻿@model WebMaze.Models.School.SchoolAccountViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@model WebMaze.Models.School.SchoolAccountViewModel
 
 @{
     Layout = "_LayoutSchool";
 }
 
+@section Scripts
+{
+    <script src="~/js/school.js"></script>
+}
+
 <div class="p-md-5 p-2 mb-0 text-white bg-darker rounded">
-    <div class="col-md-4 card">
-        <h5 class="card-title">Available views:</h5>
-        <partial name="_SchoolAccountSchedulePartial" model="@Model.FullScheduleViewModel"/>
-    </div>
-    
     <div class="col-md-8 px-0 w-100 text-dark">
         <h1 class="display-4">School profile page, changes depending on model and whether the user is a student or staff member.</h1>
     </div>
 
-
+    <div class="col-md-4 card">
+        <p class="card-title">Available actions:</p>
+        @if (@Model.ProfileViewModel.IsQualified())
+        {
+            <input type="button" onclick="location.href='@Url.Action("ModifySubject", "School")'" value="Modify Db Subjects"/>
+            <input type="button" onclick="location.href='@Url.Action("ModifySubject", "School")'" value="Modify Db Staff (NotImpl)"/>
+            <input type="button" onclick="location.href='@Url.Action("ModifySubject", "School")'" value="Modify Db Students (NotImpl)"/>
+        }
+        <form id="get-my-schedule">
+            <input type="hidden" name="Id" value="@Model.ProfileViewModel.User.Id"/>
+            <input type="hidden" name="School" value="@Model.ProfileViewModel.MainSchoolId"/>
+            <input type="button" class="sendReqButton" value="Get My Schedule (JS -> Ajax -> View(from List<views>)"/>
+        </form>
+        <partial name="_SchoolAccountSchedulePartial"></partial>
+    </div>
 </div>

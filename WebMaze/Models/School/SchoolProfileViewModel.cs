@@ -27,6 +27,12 @@ namespace WebMaze.Models.School
         
         public StaffMember? StaffRank { get; set; } = null;
 
+        public bool IsQualified()
+        {
+            return StaffRank == StaffMember.Dean || StaffRank == StaffMember.President || 
+                   StaffRank == StaffMember.TeachingStaff || StaffRank == StaffMember.ViceDean;
+        }
+
         /// <summary>
         /// Can signify both staff and student statuses
         /// </summary>

@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using WebMaze.Controllers.CustomAttribute;
 using WebMaze.DbStuff.Model;
 using WebMaze.DbStuff.Model.School;
 using WebMaze.DbStuff.Repository;
@@ -19,6 +21,7 @@ namespace WebMaze.Controllers
     [Authorize(AuthenticationSchemes = Startup.SchoolAuth)]
     public class SchoolController : Controller
     {
+        private IHttpClientFactory _factory;
         private readonly IMapper mapper;
         private readonly CitizenUserRepository _citizenUserRepository;
         private readonly SchoolBuildingRepository _schoolBuildingRepository;
@@ -28,7 +31,8 @@ namespace WebMaze.Controllers
         private readonly SchoolStudentRepository _schoolStudentRepository;
         private readonly SchoolSubjectRepository _schoolSubjectRepository;
 
-        public SchoolController(IMapper mapper, 
+        public SchoolController(IMapper mapper,
+            IHttpClientFactory factory,
             CitizenUserRepository citizen,
             SchoolBuildingRepository schoolBuilding,
             SchoolCertificateRepository schoolCertificate,
@@ -37,6 +41,7 @@ namespace WebMaze.Controllers
             SchoolStudentRepository schoolStudent,
             SchoolSubjectRepository schoolSubject)
         {
+            _factory = factory;
             this.mapper = mapper;
             _citizenUserRepository = citizen;
             _schoolBuildingRepository = schoolBuilding;
@@ -211,6 +216,13 @@ namespace WebMaze.Controllers
             {
                 User = mapper.Map<MyProfileViewModel>(_citizenUserRepository.GetUserByLogin(User.Identity.Name)),
             });
+        }
+
+        [CustomSchool]
+        [HttpGet]
+        public IActionResult ModifySubject()
+        {
+            return View("ModifySubject");
         }
 
         #region private

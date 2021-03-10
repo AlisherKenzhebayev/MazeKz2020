@@ -70,7 +70,7 @@ namespace WebMaze
         {
             services.AddRouting();
 
-            var connectionString = @"Server=localhost;Database=WebMazeKz;User Id=SA;Password=SimpleEnough123";
+            var connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=WebMazeKz;Trusted_Connection=True;MultipleActiveResultSets=true;";
             services.AddDbContext<WebMazeContext>(option => option.UseSqlServer(connectionString));
 
             services.AddAuthentication(AuthMethod)
@@ -100,6 +100,11 @@ namespace WebMaze
                     config.AccessDeniedPath = "/HealthDepartment/AccessDenied";
                 });
 
+            services.AddHttpClient("local").ConfigureHttpClient((provider, client) =>
+            {
+                client.BaseAddress = new Uri("localhost");
+            });
+            
             services.AddTransient<IAuthorizationHandler, RestrictAccessToBlockedUsersHandler>(s =>
                 new RestrictAccessToBlockedUsersHandler(s.GetService<CitizenUserRepository>()));
 

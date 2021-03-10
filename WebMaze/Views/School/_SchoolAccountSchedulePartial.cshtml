@@ -1,19 +1,14 @@
 @model List<WebMaze.Models.School.SchoolScheduleViewModel>
 
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>Partial view (Vertical) for available actions(links to views)</title>
-    Foreach->GEN
-</head>
-<body>
 <div>
-    
+    <p>
+        Partial view for MyProfile schedule
+        <br>
+    </p>
+    <table id="js-generated-schedule">
+        @foreach (var scheduleView in @Model)
+        {
+            <p>@scheduleView.SchoolSubject</p>
+        }
+    </table>
 </div>
-</body>
-</html>
