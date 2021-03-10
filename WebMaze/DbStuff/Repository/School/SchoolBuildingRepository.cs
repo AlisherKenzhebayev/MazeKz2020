@@ -9,10 +9,10 @@ namespace WebMaze.DbStuff.Repository.School
         {
         }
 
-        public SchoolBuilding GetByName(string schoolName) 
+        public IQueryable<SchoolBuilding> GetByName(string schoolName) 
         {
             var retStr = dbSet
-                .SingleOrDefault(o=>o.SchoolName == schoolName);
+                .Where(o => o.SchoolName == schoolName);
             return retStr;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using WebMaze.DbStuff.Model;
@@ -17,8 +18,13 @@ namespace WebMaze.Models.School
         private string statusString;
 
         public MyProfileViewModel User { get; set; }
+        
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
+        
+        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
+        
         public StaffMember? StaffRank { get; set; } = null;
 
         /// <summary>

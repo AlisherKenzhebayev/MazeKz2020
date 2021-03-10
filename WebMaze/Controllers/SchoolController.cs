@@ -180,6 +180,39 @@ namespace WebMaze.Controllers
             return View("Index");
         }
 
+        [HttpGet]
+        public IActionResult RegAsStaff()
+        {
+            return View(new SchoolProfileViewModel()
+            {
+                User = mapper.Map<MyProfileViewModel>(_citizenUserRepository.GetUserByLogin(User.Identity.Name)),
+            });
+        }
+
+        [HttpPost]
+        public IActionResult RegAsStaff(SchoolProfileViewModel profileViewModel)
+        {
+            var citizen = _citizenUserRepository.GetUserByLogin(User.Identity.Name);
+            _schoolStaffRepository.Save(new SchoolStaff()
+            {
+                CitizenUserId = citizen.Id,
+                SchoolId = _schoolBuildingRepository.GetByName("TEST").First().Id,
+            });
+            return View(new SchoolProfileViewModel()
+            {
+                User = mapper.Map<MyProfileViewModel>(citizen),
+            });
+        }
+
+        [HttpGet]
+        public IActionResult RegAsStudent()
+        {
+            return View(new SchoolProfileViewModel()
+            {
+                User = mapper.Map<MyProfileViewModel>(_citizenUserRepository.GetUserByLogin(User.Identity.Name)),
+            });
+        }
+
         #region private
         
         private async Task AuthorizeUser(long userId, string login)

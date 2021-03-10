@@ -1,10 +1,17 @@
-﻿@{
+﻿@model WebMaze.Models.Users.ProfileViewModel
+
+@{
     Layout = "_LayoutSchool";
 }
 
 <div class="p-md-5 p-4 mb-4 text-white bg-darker rounded">
     <div class="col-md-10 px-0 w-100 text-dark">
         <h1 class="display-4">Guest profile page, offers to register as a student/teacher.</h1>
+    </div>
+    
+    <div class="col-md-10 px-0 w-100 bg-dark">
+        <img class="avatar" src="@Model.AvatarUrl" alt="@Model.AvatarUrl"/>
+        <p class="display-4">Welcome @Model.Login</p>
     </div>
     
     <div class="loginWrapper">
@@ -22,6 +29,7 @@
                         <li>Call a bus trip (NOT IMPL)</li>
                     </ul>
                 </div>
+                <input type="button" value="Register =>" onclick="location.href='@Url.Action("RegAsStaff", "School")'" />
             </div>
         </div>
         <div class="col-md-5 px-0 w-100 text-dark">
@@ -30,12 +38,13 @@
                     Register as a Student?
                 </div>
                 <div class="card-body">
-                     This will give you access to:
-                     <ul>
-                         <li>View, Edit only your student profile</li>
-                         <li>View, Edit your schedules</li>
-                     </ul>
-                 </div>
+                    This will give you access to:
+                    <ul>
+                        <li>View, Edit only your student profile</li>
+                        <li>View, Edit your schedules</li>
+                    </ul>
+                </div>                
+                <input type="button" value="Register =>" onclick="location.href='@Url.Action("RegAsStudent", "School")'" />
             </div>
         </div>
     </div>

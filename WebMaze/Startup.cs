@@ -70,7 +70,7 @@ namespace WebMaze
         {
             services.AddRouting();
 
-            var connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=WebMazeKz;Trusted_Connection=True;MultipleActiveResultSets=true;";
+            var connectionString = @"Server=localhost;Database=WebMazeKz;User Id=SA;Password=SimpleEnough123";
             services.AddDbContext<WebMazeContext>(option => option.UseSqlServer(connectionString));
 
             services.AddAuthentication(AuthMethod)

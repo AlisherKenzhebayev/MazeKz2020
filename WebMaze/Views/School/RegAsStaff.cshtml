@@ -1,0 +1,41 @@
+﻿@model WebMaze.Models.School.SchoolProfileViewModel
+@using WebMaze.DbStuff.Model.School.Enums;
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    Layout = "_LayoutSchool";
+}
+
+@section Scripts{
+    <script src="~/js/school.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+}
+
+<div class="p-md-5 p-4 mb-4 text-white bg-darker rounded">
+    <div class="col-md-10 px-0 w-100 text-dark">
+        <h1 class="display-4">RegAsStaff page.</h1>
+    </div>
+</div>
+
+<div class="col-md-10 px-0 w-100 bg-dark">
+    <img class="avatar" src="@Model.User.AvatarUrl" alt="@Model.User.AvatarUrl"/>
+    <p class="display-4">Welcome @Model.User.Login</p>
+</div>
+
+<div class="loginWrapper">
+    @using(@Html.BeginForm("RegAsStaff", "School", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true);
+            @Html.HiddenFor(m => m.User, @Model.User);
+            @Html.Label("RankSelect");
+            @Html.DropDownListFor(m => m.StaffRank, Html.GetEnumSelectList(typeof(StaffMember)));
+            <hr>
+            @Html.Label("StartDate");
+            @Html.EditorFor(m=>m.StartDate);
+            <hr>
+            @Html.Label("EndDate");
+            @Html.EditorFor(m=>m.EndDate);
+            <hr>
+            <button type="submit">Save</button>
+        }
+</div>

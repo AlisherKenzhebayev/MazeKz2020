@@ -145,15 +145,6 @@ namespace WebMaze.DbStuff
                     .IsUnique();
             });
 
-            modelBuilder.Entity<SchoolBuilding>(builder =>
-            {
-                builder
-                    .HasOne(building => building.Address)
-                    .WithOne()
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasForeignKey<SchoolBuilding>(building => building.AddressId);
-            });
-            
             modelBuilder.Entity<SchoolCertificate>(builder =>
             {
                 builder

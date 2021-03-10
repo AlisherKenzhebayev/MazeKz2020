@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using WebMaze.DbStuff.Model;
+using WebMaze.DbStuff.Model.School;
 using WebMaze.DbStuff.Model.UserAccount;
 using WebMaze.DbStuff.Repository;
+using WebMaze.DbStuff.Repository.School;
 using WebMaze.Infrastructure.Enums;
 using TaskStatus = WebMaze.Infrastructure.Enums.TaskStatus;
 
@@ -23,6 +25,8 @@ namespace WebMaze.DbStuff
 
         private MessageRepository messageRepository;
 
+        private SchoolBuildingRepository schoolBuildingRepository;
+
         public TestDataSeeder(IServiceScope scope)
         {
             citizenUserRepository = scope.ServiceProvider.GetService<CitizenUserRepository>();
@@ -30,6 +34,7 @@ namespace WebMaze.DbStuff
             friendshipRepository = scope.ServiceProvider.GetService<FriendshipRepository>();
             userTaskRepository = scope.ServiceProvider.GetService<UserTaskRepository>();
             messageRepository = scope.ServiceProvider.GetService<MessageRepository>();
+            schoolBuildingRepository = scope.ServiceProvider.GetService<SchoolBuildingRepository>();
 
             if (citizenUserRepository == null || roleRepository == null || friendshipRepository == null ||
                 userTaskRepository == null || messageRepository == null)
@@ -40,6 +45,7 @@ namespace WebMaze.DbStuff
 
         public void SeedData()
         {
+            AddSchools();
             AddDoctors();
             AddPolicemen();
             AddRegularUsers();
@@ -47,6 +53,30 @@ namespace WebMaze.DbStuff
             AddCertificates();
             AddFriendshipsAndMessages();
             AddUserTasksToBill();
+        }
+        
+        private void AddSchools()
+        {
+            var schoolBuildings = new List<SchoolBuilding>()
+            {
+                new SchoolBuilding
+                {
+                    Description = "Good Test School",
+                    SchoolName = "TEST",
+                },
+                new SchoolBuilding
+                {
+                    Description = "Bad Test School",
+                    SchoolName = "TEST2",
+                }
+            };
+            foreach (var schoolBuilding in schoolBuildings)
+            {
+                if(!schoolBuildingRepository.GetByName(schoolBuilding.SchoolName).Any())
+                {
+                    schoolBuildingRepository.Save(schoolBuilding);
+                }
+            }
         }
 
         private void AddDoctors()

@@ -189,3 +189,8 @@ h1.text-danger {
     color: #d73532;
 }
 
+img.avatar {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 50%;
+}
